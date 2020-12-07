@@ -189,7 +189,23 @@ ul{
     margin-top: -8%;
     cursor: pointer;
   }
+  .closeSession {
+    color: red;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: -8%;
+    cursor: pointer;
+  }
   .closeInputModal{
+    color: red;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: -8%;
+    cursor: pointer;
+  }
+   .closeLogin{
     color: red;
     float: right;
     font-size: 28px;

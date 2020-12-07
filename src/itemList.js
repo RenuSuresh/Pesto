@@ -1,10 +1,16 @@
-
+const url = location.href;
+const htmlPageIndex = url.lastIndexOf('/');
+const baseUrl = url.substring(0,htmlPageIndex)
+if(!localStorage.getItem('baseUrl')){
+    localStorage.setItem('baseUrl',baseUrl)
+}
 const addItem = () => {
-    const currentUserDetails = JSON.parse(sessionStorage.getItem('currentUser'))
+    const currentUserDetails = JSON.parse(sessionStorage.getItem('currentUser'));
     let item = document.getElementById('item').value;
     if (!item) {
         alert('Please enter item')
-    } else if (currentUserDetails.groceryList.length < 5) {
+    } 
+     else if (currentUserDetails.groceryList.length < 5) {
         let list = document.getElementById('list');
         currentUserDetails.groceryList.push(item)
         sessionStorage.setItem('currentUser', JSON.stringify(currentUserDetails))
@@ -49,6 +55,18 @@ function remove(index) {
 
 function getGroceryList() {
     const list = JSON.parse(sessionStorage.getItem('currentUser'));
+    const currentUserDetails = JSON.parse(sessionStorage.getItem('currentUser'));
+if(!currentUserDetails){
+    let modal = document.getElementById("showSessionError");
+    let span = document.getElementsByClassName("closeSession")[0];
+
+    span.onclick = function () {
+        modal.style.display = "none";
+        changeUrl()
+    }
+    document.getElementById('showSessionError').style.display = 'block';
+
+} else{
     var node = document.createElement("label");
     node.setAttribute("id", "username-label")
     var textnode = document.createTextNode(`Hi, ${list.name}`);
@@ -59,14 +77,23 @@ function getGroceryList() {
     list.groceryList.forEach((element, index) => {
         document.getElementById('list').innerHTML += `<li id="list${index}"><span class="order-list">${index + 1}</span> ${element}  <span class="update-btn"><button onclick="remove(${index})" class="remove-btn" >-</button>  <button onclick = "showEdit(${index})" class="edit-btn"> edit </button></span></li>`
     });
+}
+    
 
+}
+
+function changeUrl(){
+    const baseUrl = localStorage.getItem('baseUrl')
+    sessionStorage.clear();
+    location.replace(baseUrl + '/login.html')
 }
 
 function logout() {
     updateUserData();
-    const baseUrl = localStorage.getItem('baseUrl')
-    sessionStorage.clear();
-    location.replace(baseUrl + '/login.html')
+    changeUrl();
+    // const baseUrl = localStorage.getItem('baseUrl')
+    // sessionStorage.clear();
+    // location.replace(baseUrl + '/login.html')
 }
 
 function showEdit(index) {
